@@ -45,6 +45,8 @@ class C(object):
     AUTH_CODE_VERIFY = ''
     AUTH_CODE_CHALLENGE = ''
 
+    AUTH_INIT_VALUES = None
+
 
 # This takes the contents of config.yaml and creds.yaml and updates the values in class C
 for configuration_filename in ['config.yaml', 'creds.yaml']:
@@ -81,5 +83,11 @@ C.HTTP_GET_VALUE_OPENID_EMAIL_OFFLINE_ACCESS = 'openid email offline_access'
 
 C.AUTH_CODE_CHARACTER_SET = list(ascii_letters*2 + digits*2)
 shuffle(C.AUTH_CODE_CHARACTER_SET)
-C.AUTH_CODE_VERIFY = ''.join(C.AUTH_CODE_CHARACTER_SET[0:86])
-C.AUTH_CODE_CHALLENGE = b64encode(sha256(C.AUTH_CODE_VERIFY.encode()).hexdigest().encode())
+C.AUTH_GET_CODE_VERIFY = ''.join(C.AUTH_CODE_CHARACTER_SET[0:86])
+C.AUTH_GET_CODE_CHALLENGE = b64encode(sha256(C.AUTH_CODE_VERIFY.encode()).hexdigest().encode())
+
+C.AUTH_INIT_VALUES = {
+    C.HTTP_GET_KEYWORD_CLIENT_ID: C.HTTP_GET_VALUE_OWNERAPI,
+    C.HTTP_GET_KEYWORD_CODE_CHALLENGE_METHOD: C.HTTP_GET_VALUE_S256,
+    C.HTTP_GET_KEYWORD_CODE_CHALLENGE: C.AUTH_GET_CODE_CHALLENGE,
+}
