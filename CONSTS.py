@@ -19,6 +19,7 @@ class C(object):
     # Below are items that the user should not be allowed to set via configuration file
     # This section only exists so IDEs won't complain about missing variables.
     AUTH_ENDPOINT_V3_AUTHORIZE = ''
+    AUTH_ENDPOINT_V3_TOKEN = ''
     AUTH_ENDPOINT_VOID_CALLBACK = ''
 
     HEADER_KEYWORD_USER_AGENT = ''
@@ -65,6 +66,7 @@ C.HEADER_VALUE_USER_AGENT = 'adrong+TeslaTest@gmail.com'
 C.HEADERS = {C.HEADER_KEYWORD_USER_AGENT: C.HEADER_VALUE_USER_AGENT}
 
 C.AUTH_ENDPOINT_V3_AUTHORIZE = 'oauth2/v3/authorize'
+C.AUTH_ENDPOINT_V3_TOKEN = 'oauth2/v3/token'
 C.AUTH_ENDPOINT_VOID_CALLBACK = 'void/callback'
 
 C.HTTP_GET_KEYWORD_CLIENT_ID = 'client_id'

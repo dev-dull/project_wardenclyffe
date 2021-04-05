@@ -56,9 +56,11 @@ class ProjectWardenclyffe(Session):
 
         # Submit credentials to get an authorization code
         response = self.post(C.AUTH_BASE_URL + C.AUTH_ENDPOINT_V3_AUTHORIZE, data=json.dumps(form_data),
-                             params=C.AUTH_INIT_VALUES, headers=C.HEADERS)
+                             headers=C.HEADERS, allow_redirects=False)
+                             # params=C.AUTH_INIT_VALUES, headers=C.HEADERS, allow_redirects=False)
         print(response.status_code)
-        print(response.text)
+        print(response.headers)
+        # print(response.text)
 
 
 def main():
