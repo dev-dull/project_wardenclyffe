@@ -1,6 +1,7 @@
 import json
 from abc import ABC
 from CONSTS import C
+from urllib import parse
 from requests import Session
 from html.parser import HTMLParser
 # from requests_oauthlib import OAuth2Session
@@ -55,12 +56,13 @@ class ProjectWardenclyffe(Session):
         form_data.update({'identity': C.USERNAME, 'credential': C.PASSWORD})
 
         # Submit credentials to get an authorization code
-        response = self.post(C.AUTH_BASE_URL + C.AUTH_ENDPOINT_V3_AUTHORIZE, data=json.dumps(form_data),
-                             headers=C.HEADERS, allow_redirects=False)
-                             # params=C.AUTH_INIT_VALUES, headers=C.HEADERS, allow_redirects=False)
-        print(response.status_code)
-        print(response.headers)
+        response = self.post(C.AUTH_BASE_URL + C.AUTH_ENDPOINT_V3_AUTHORIZE, data=form_data, headers=C.HEADERS, allow_redirects=False)
+        # print(response.status_code)
+        # print(response.headers['Location'])
         # print(response.text)
+
+        auth_code = parse.parse_qs(parse.urlparse(response.headers['Location']).query)['code']
+        
 
 
 def main():
