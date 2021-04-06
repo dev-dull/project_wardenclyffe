@@ -57,11 +57,21 @@ class ProjectWardenclyffe(Session):
 
         # Submit credentials to get an authorization code
         response = self.post(C.AUTH_BASE_URL + C.AUTH_ENDPOINT_V3_AUTHORIZE, data=form_data, headers=C.HEADERS, allow_redirects=False)
+        # TODO,3: Status code of 200 here means that we probably got the login page again. Locked account?
         # print(response.status_code)
         # print(response.headers['Location'])
         # print(response.text)
 
         auth_code = parse.parse_qs(parse.urlparse(response.headers['Location']).query)['code']
+        # print('auth code:', auth_code[0])
+        payload = {
+            'grant_type': 'authorization_code',
+            C.HTTP_GET_KEYWORD_CLIENT_ID:  C.HTTP_GET_VALUE_OWNERAPI,
+            'code': auth_code,
+            'code_verifier': C.AUTH_GET_CODE_VERIFY,
+            C.HTTP_GET_KEYWORD_REDIRECT_URI: C.HTTP_GET_VALUE_VOID_CALLBACK
+        }
+        self.post(C.AUTH_BASE_URL + C.AUTH_ENDPOINT_V3_TOKEN)  # TODO this line isn't done.
         
 
 
