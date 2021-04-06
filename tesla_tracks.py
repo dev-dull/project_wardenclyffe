@@ -71,8 +71,23 @@ class ProjectWardenclyffe(Session):
             'code_verifier': C.AUTH_GET_CODE_VERIFY,
             C.HTTP_GET_KEYWORD_REDIRECT_URI: C.HTTP_GET_VALUE_VOID_CALLBACK
         }
-        self.post(C.AUTH_BASE_URL + C.AUTH_ENDPOINT_V3_TOKEN)  # TODO this line isn't done.
-        
+        response = self.post(C.AUTH_BASE_URL + C.AUTH_ENDPOINT_V3_TOKEN, data=payload, headers=C.HEADERS)
+        # print(response.status_code)
+        # print(response.headers)
+        # print(response.text)
+
+        bearer_token = response.json()['access_token']
+        C.HEADERS.pop('Cookie')
+        C.HEADERS['Authorization'] = 'Bearer %s' % bearer_token
+        payload = {
+            'grant_type': 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+            'client_id': '81527cff06843c8634fdc09e8ac0abefb46ac849f38fe1e431c2ef2106796384',
+            'client_secret': 'c7257eb71a564034f9419ee651c7d0e5f7aa6bfbd18bafb5c5c033b093bb2fa3'
+        }
+        response = self.post(C.API_BASE_URL + C.AUTH_ENDPOINT_TOKEN, data=payload, headers=C.HEADERS)
+        print(response.status_code)
+        print(response.headers)
+        print(response.text)
 
 
 def main():
