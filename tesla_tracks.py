@@ -28,15 +28,14 @@ def main():
         print(vehicles[0]['display_name'])
         if vehicles[0]['state'] == 'online':
             vd = vehicles[0].get_vehicle_data()
+            # 'vin': '5YJ3E1EA2MF871477'
+            _id = vehicles[0]['vin'][12:] + str(int(mktime(gmtime())))  # TODO: grab VIN from the vehicle data `vd` instead.
             for k,v in vd.items():
                 if isinstance(v, dict):
-                    # 'vin': '5YJ3E1EA2MF871477'
-
-                    _id = vehicles[0]['vin'][12:] + str(int(mktime(gmtime()))) # TODO: grab VIN from the vehicle data `vd` instead.
                     vd[k] = fixup_epoch_timestamp(v)
 
                     r = requests.put('http://elasticsearch.deep13.lol:9200/{index}/_doc/{id}'.format(index='test_'+k, id=_id),
-                                     headers={'content-type': 'application/json'}, data=json.dumps(vd))
+                                     headers={'content-type': 'application/json'}, data=json.dumps(v))
                     print(r.status_code, r.text)
                     print('\n')
         sleep(15)
