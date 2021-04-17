@@ -30,9 +30,17 @@ def main():
         print(vehicles[0]['display_name'])
         if vehicles[0]['state'] == 'online':
             print('is online')
-            vd = vehicles[0].get_vehicle_data()
-            print('got data')
+
+            try:
+                vd = vehicles[0].get_vehicle_data()
+                print('got data')
             # 'vin': '5YJ3E1EA2MF871477'
+            except Exception as e:
+                print('!!!!!!!!!EXCEPTION RAISED:', e)
+                print('VEHICLES:', vehicles)
+                sleep(10*60)
+                continue
+
             _id = vehicles[0]['vin'][12:] + str(int(mktime(gmtime())))  # TODO: grab VIN from the vehicle data `vd` instead.
             print('generated GUID')
             timestamps = []
