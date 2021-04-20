@@ -33,14 +33,14 @@ def main():
         print(vehicles[0]['display_name'])
         if vehicles[0]['state'] == 'online':
             print('is online')
-            if vehicles[0]['in_service']:
-                print('is in service')
-            else:
-                # User probably woke the car up from the phone meaning we can likely capture data,  but we don't want to
-                # keep the car awake by accident. Wait 15min so car has chance to fall back asleep.
-                # In most (if not all) cases, this is likely redundant with the `is_user_present` condition below.
-                print('Car is not in service. Will wait 15min.')
-                sleep_interval = 15*60+1
+            # if vehicles[0]['in_service']:  # This was `False` even while driving, so ignoring it until I understand what it is for.
+            #     print('is in service')
+            # else:
+            #     # User probably woke the car up from the phone meaning we can likely capture data,  but we don't want to
+            #     # keep the car awake by accident. Wait 15min so car has chance to fall back asleep.
+            #     # In most (if not all) cases, this is likely redundant with the `is_user_present` condition below.
+            #     print('Car is not in service. Will wait 15min.')
+            #     sleep_interval = 15*60+1
 
             try:
                 vd = vehicles[0].get_vehicle_data()
